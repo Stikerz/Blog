@@ -8,7 +8,7 @@ from ..models import Comment
 from articles .models import Article
 User = get_user_model()
 
-class ArticleModelTest(TestCase):
+class CoomentModelTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
