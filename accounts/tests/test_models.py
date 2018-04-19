@@ -4,7 +4,7 @@ from ..models import Profile
 
 User = get_user_model()
 
-class ArticleModelTest(TestCase):
+class AccountModelTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
