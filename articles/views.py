@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect, Http404
 from django.contrib.contenttypes.models import ContentType
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import Article
 from .forms import ArticleForm
@@ -73,16 +74,22 @@ def article_delete(request, slug):
 def article_list(request):
     if request.user.is_authenticated:
         template = 'articles/article_list.html'
-        object_list = Article.objects.all()
-
+        query_set = Article.objects.all().order_by('-updated')
         query = request.GET.get("query")
         if query:
-            object_list = object_list.filter(title__icontains=query)
+            query_set = query_set.filter(title__icontains=query)
+        paginator = Paginator(query_set, 5)
+        page = request.GET.get('page')
+        object_list = paginator.get_page(page)
         context = {'object_list': object_list}
 
         return render(request, template, context)
     else:
         raise Http404("Page cannot be found")
+
+
+
+
 
 def article_detail(request, slug):
     if request.user.is_authenticated:

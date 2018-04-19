@@ -7,10 +7,42 @@
 <input type="submit" value="Search"/>
 
 </form>
-    
+    <div class="col-md-12">
 {% for obj in object_list %}
-    <h1><a href="{% url 'articles:article_detailed_view' slug=obj.slug %}" >
-        {{ obj.title }}</a></h1>
+
+
+
+    <div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title"><a href="{% url 'articles:article_detailed_view' slug=obj.slug %}" >
+        {{ obj.title }}</a></h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{ obj.updated | timesince }} ago
+    </h6>
+    <p class="card-text">{{ obj.body | linebreaks | truncatechars:60 }}</p>
+    <a href=""{% url 'articles:article_detailed_view' slug=obj.slug %}""
+        class="card-link">View</a>
+{#    <a href="#" class="card-link">Another link</a>#}
+  </div>
+</div><br/>
+
 {% endfor %}
 
-{% endblock %}
+    <div class="pagination">
+    <span class="step-links">
+        {% if object_list.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ object_list.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.
+        </span>
+
+        {% if object_list.has_next %}
+            <a href="?page={{ object_list.next_page_number }}">next</a>
+            <a href="?page={{ object_list.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+ </div>
+{% endblock content%}

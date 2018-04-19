@@ -1,18 +1,31 @@
 {% extends 'base.html' %}
 
+
+{% block head_title %}
+    {{ article.title }} | {{ block.super }}
+{% endblock head_title %}
+
+
 {% block content %}
 
-    <h1>{{ article.title }}</h1>
-    <h1>{{ article.body }}</h1>
-    <h1>{{ article.created }}</h1>
+<div class="col-xs-6 col-xs-offset-3">
+
+    <h1>{{ article.title }}<small>{{ article.created }}</small> </h1>
+    {{ article.body | linebreaks }}</br>
+    </br>
+
+</div>
+
+
+
     {% for comment in comments %}
-        <h1>{{ comment.content }}</h1>
+        {{ comment.content }}
     {% endfor %}
     <form method="post" action="."> {% csrf_token %}
-    <h1>{{ comments_form.as_p }}</h1>
+           {{ comments_form.as_p }}
     <input type="submit" value="Submit"/>
     </form>
 
 
 
-{% endblock %}
+{% endblock content %}
