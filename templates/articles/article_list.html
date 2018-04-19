@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form method="get" action="">
+
+<input type="tex" name="query" placeholder="Search Posts"/>
+<input type="submit" value="Search"/>
+
+</form>
+    
+{% for obj in object_list %}
+    <h1><a href="{% url 'articles:article_detailed_view' slug=obj.slug %}" >
+        {{ obj.title }}</a></h1>
+{% endfor %}
+
+{% endblock %}
