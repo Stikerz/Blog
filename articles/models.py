@@ -7,7 +7,7 @@ from django.template.defaultfilters import slugify
 
 class Article(models.Model):
     user = models.ForeignKey(User,
-                             on_delete=models.CASCADE, default=1)
+                             on_delete=models.CASCADE)
     STATUS_CHOICES= (('Published', 'Published'), ('Draft', 'Draft'))
     title = models.CharField(max_length=250)
     body = models.TextField()
