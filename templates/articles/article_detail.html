@@ -1,29 +1,46 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 
 {% block head_title %}
     {{ article.title }} | {{ block.super }}
 {% endblock head_title %}
 
-
 {% block content %}
 
 
-<div class="col-xs-6 col-xs-offset-3">
 
-    <h1>{{ article.title }}<small>{{ article.created }}</small> </h1>
-    {{ article.body | linebreaks }}</br>
+    <div class="container h-100">
+       <div class="row align-items-center h-100">
+        <div class="col-6 mx-auto">
+
+    <h1>{{ article.title }}</h1><h6>updated {{ article.updated }}</h6></br></br>
+    {{ article.body | linebreaks |wordwrap:50 }}</br>
     </br>
+ </br>
+ </br>
+ </br>
 
-</div>
+
+    <h6>Comments</h6>
+
+        <ol class="list-group list-group-flush">
 
     {% for comment in comments %}
-        {{ comment.content }}
+        <li class="list-group-item">{{ comment.content | linebreaks|wordwrap:15 }} posted by {{ comment.user.username }} {{comment.timestamp | timesince  }}  ago
+        </li>
     {% endfor %}
+        </ol><br/><br/>
     <form method="post" action="."> {% csrf_token %}
-           {{ comments_form.as_p }}
+           {{ comments_form|crispy }}
     <input type="submit" value="Submit"/>
     </form>
+        </div>
+       </div>
+       </div>
+</br>
+ </br>
+ </br>
 
 
 
