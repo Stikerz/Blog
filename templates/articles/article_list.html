@@ -27,9 +27,14 @@
     <h6 class="card-subtitle mb-2 text-muted">{{ obj.updated | timesince }} ago
     </h6>
     <p class="card-text">{{ obj.body | linebreaks | truncatechars:60 }}</p>
-    <a href=""{% url 'articles:article_detailed_view' slug=obj.slug %}""
+    <a href="{% url 'articles:article_detailed_view' slug=obj.slug %}"
         class="card-link">View</a>
-{#    <a href="#" class="card-link">Another link</a>#}
+      {% if  request.user == obj.user %}
+    <a href="{% url 'articles:article_update' slug=obj.slug %}"
+       class="card-link">Edit</a>
+    <a href="{% url 'articles:article_delete' slug=obj.slug %}"
+       class="card-link">Delete</a>
+      {% endif %}
   </div>
 </div><br/>
 

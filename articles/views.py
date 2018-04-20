@@ -81,7 +81,7 @@ def article_list(request):
         paginator = Paginator(query_set, 5)
         page = request.GET.get('page')
         object_list = paginator.get_page(page)
-        context = {'object_list': object_list}
+        context = {'object_list': object_list, 'request': request}
 
         return render(request, template, context)
     else:
