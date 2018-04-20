@@ -8,6 +8,7 @@
 
 {% block content %}
 
+
 <div class="col-xs-6 col-xs-offset-3">
 
     <h1>{{ article.title }}<small>{{ article.created }}</small> </h1>
@@ -15,8 +16,6 @@
     </br>
 
 </div>
-
-
 
     {% for comment in comments %}
         {{ comment.content }}
