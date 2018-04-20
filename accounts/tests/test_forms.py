@@ -29,7 +29,7 @@ class AccountsFormTest(TestCase):
     # Valid Form Data
     def test_LoginForm_valid(self):
         user = User.objects.get(id=1)
-        data = {'username': user.username, 'password': user.password}
+        data = {'username': user.username, 'password': 'smith'}
         form = LoginForm(data=data)
         self.assertTrue(form.is_valid())
 
