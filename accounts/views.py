@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django import forms
 from django.contrib.auth import authenticate,login,logout
 
 from .forms import LoginForm, RegisterForm, ProfileForm
@@ -14,9 +15,11 @@ def login_view(request):
         if form.is_valid():
             username = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password")
+
             user = authenticate(username=username, password=password)
-            login(request, user)
-            return redirect('/articles/article_list/')
+            if user:
+                login(request, user)
+                return redirect('/articles/article_list/')
 
         context = {'user_form': form}
         return render(request, template, context)
