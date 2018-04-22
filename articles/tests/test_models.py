@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from ..models import Article
+from django.template.defaultfilters import slugify
 User = get_user_model()
 
 class ArticleModelTest(TestCase):
@@ -39,4 +40,30 @@ class ArticleModelTest(TestCase):
         article=Article.objects.get(id=1)
         title = article.title
         self.assertEquals(title, str(article))
+
+    def test_get_delete_url(self):
+        article = Article.objects.get(id=1)
+        slug_title = slugify(article.title)
+        article_delete_url = article.get_delete_url()
+
+        self.assertEquals(article_delete_url, "/articles/article_list/{"
+                                              "}/delete/".format(slug_title))
+
+    def test_get_update_url(self):
+        article = Article.objects.get(id=1)
+        slug_title = slugify(article.title)
+        article_update_url = article.get_update_url()
+
+        self.assertEquals(article_update_url, "/articles/article_list/{"
+                                              "}/update/".format(slug_title))
+
+    def test_get_like_url(self):
+        article = Article.objects.get(id=1)
+        slug_title = slugify(article.title)
+        article_like_url = article.get_likes_url()
+
+        self.assertEquals(article_like_url, "/articles/article_list/{"
+                                              "}/like/".format(slug_title))
+
+
 

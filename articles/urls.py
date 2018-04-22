@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import article_detail, article_list, article_create, \
-    article_update, article_delete
+    article_update, article_delete, article_likes_toggle
 
 urlpatterns = [
 
@@ -12,4 +12,6 @@ urlpatterns = [
     path('article_list/<slug:slug>/update/', article_update,
          name='article_update'),
     path('article_list/<slug:slug>/delete/', article_delete, name='article_delete'),
+    path('article_list/<slug:slug>/like/', article_likes_toggle,
+      name='like'),
 ]

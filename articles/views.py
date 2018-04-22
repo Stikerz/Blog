@@ -120,4 +120,17 @@ def article_detail(request, slug):
     else:
         raise Http404("Page cannot be found")
 
+def article_likes_toggle(request, slug):
+    if request.user.is_authenticated:
+        article = get_object_or_404(Article, slug=slug)
+        if request.user in article.likes.all():
+            article.likes.remove(request.user)
+        else:
+            article.likes.add(request.user)
+        return HttpResponseRedirect('/articles/article_list/{}'.format(
+                    article.slug))
+
+    else:
+        raise Http404("Page cannot be found")
+
 

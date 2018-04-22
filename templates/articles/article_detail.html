@@ -20,9 +20,18 @@
  </br>
  </br>
  </br>
+ <p>By {{ article.user.username }}</p>
 
+            <p> <a href="{{ article.get_likes_url }}">Like </a>
+                {% if  request.user == article.user %}
+                <a href="{{ article.get_update_url }}"> Edit </a>
+                <a href="{{ article.get_delete_url }}"> Delete </a>
+                {% endif %}
 
-    <h6>Comments</h6>
+            </p>
+            <p>Likes: {{article.likes.count }}</p>
+
+    <p>Comments</p>
 
         <ol class="list-group list-group-flush">
 

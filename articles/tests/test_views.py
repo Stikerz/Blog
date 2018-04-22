@@ -124,11 +124,14 @@ class ArticlesViewsTest(TestCase):
     def test_article_delete_view_with_edit_permissions_user_loggedin(self):
         user_login = self.client.login(username="john", password="smith")
         self.assertTrue(user_login)
+
+        self.assertEqual(len(Article.objects.all()), 1)
         article = Article.objects.get(id=1)
 
         response = self.client.get('/articles/article_list/{}/delete/'.format(
             article.slug))
         self.assertEqual(response.status_code, 302)
+        self.assertEqual(len(Article.objects.all()), 0)
 
     def test_article_delete_view_with_non_edit_permissions_user_loggedin(self):
         user_login = self.client.login(username="BigBob", password="brown")
@@ -136,6 +139,27 @@ class ArticlesViewsTest(TestCase):
         article = Article.objects.get(id=1)
 
         response = self.client.get('/articles/article_list/{}/delete/'.format(
+            article.slug))
+        self.assertEqual(response.status_code, 404)
+
+    def test_article_like_view_user_loggedin(self):
+        user_login = self.client.login(username="john", password="smith")
+        self.assertTrue(user_login)
+        article = Article.objects.get(id=1)
+        self.assertEqual(len(article.likes.all()), 0)
+
+        response = self.client.get('/articles/article_list/{}/like/'.format(
+            article.slug))
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(len(article.likes.all()), 1)
+
+    def test_article_like_view_user_loggedout(self):
+        user_login = self.client.login(username="BigBob", password="brown")
+        self.assertTrue(user_login)
+        self.client.logout()
+        article = Article.objects.get(id=1)
+
+        response = self.client.get('/articles/article_list/{}/like/'.format(
             article.slug))
         self.assertEqual(response.status_code, 404)
 
