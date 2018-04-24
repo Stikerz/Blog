@@ -32,6 +32,14 @@ class Article(models.Model):
     def get_delete_url(self):
         return reverse("articles:article_delete", kwargs={'slug': self.slug})
 
+    @property
+    def get_title(self):
+        return self.title
+
+    @property
+    def get_likes_count(self):
+        return self.likes.count()
+
 
     def __str__(self):
         return self.title

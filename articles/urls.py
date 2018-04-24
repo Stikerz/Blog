@@ -1,11 +1,13 @@
 from django.urls import path
 
 from .views import article_detail, article_list, article_create, \
-    article_update, article_delete, article_likes_toggle
+    article_update, article_delete, article_likes_toggle, chart_data_view
 
 urlpatterns = [
 
     path('article_list/', article_list, name='article_list_view'),
+    path('statistics/', chart_data_view ,
+         name='statistics_view'),
     path('article_list/<slug:slug>/', article_detail,
          name='article_detailed_view'),
     path('create/', article_create, name='article_create'),

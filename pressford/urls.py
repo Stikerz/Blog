@@ -19,6 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from . import views
+from articles.views import ChartData
 from accounts.views import login_view,logout_view,register_view
 
 
@@ -32,6 +33,8 @@ urlpatterns = [
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
     path('', login_view, name='home'),
+    path('api/chart/data/', ChartData.as_view()),
+
 ]
 
 if settings.DEBUG:

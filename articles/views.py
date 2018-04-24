@@ -1,7 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect, Http404
 from django.contrib.contenttypes.models import ContentType
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import Paginator
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import authentication, permissions
+
 
 from .models import Article
 from .forms import ArticleForm
@@ -121,6 +126,7 @@ def article_detail(request, slug):
         raise Http404("Page cannot be found")
 
 def article_likes_toggle(request, slug):
+    #TODO: Change method for Ajax call functionality as this function is wasteful
     if request.user.is_authenticated:
         article = get_object_or_404(Article, slug=slug)
         if request.user in article.likes.all():
@@ -132,5 +138,31 @@ def article_likes_toggle(request, slug):
 
     else:
         raise Http404("Page cannot be found")
+
+
+def chart_data_view(request):
+    if request.user.is_authenticated:
+        template = 'articles/statistics.html'
+        return render(request, template, {})
+
+    else:
+        raise Http404("Page cannot be found")
+
+
+class ChartData(APIView):
+    authentication_classes = [authentication.BasicAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, format=None):
+        article_titles = []
+        article_likes = []
+
+        for article in Article.objects.all():
+            article_titles.append(article.get_title)
+            article_likes.append(article.get_likes_count)
+
+        data = {"labels": article_titles,
+                "likes": article_likes}
+        return Response(data)
 
 
