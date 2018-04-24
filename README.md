@@ -1,7 +1,7 @@
 # FS TDC Developer Assessment**
 
 
- ## Scenario   Background:  
+## Scenario   Background:
  
 #### W. Pressford is a partner at Pressford Consulting.He would like to create a system to which he can publish news for all the employees to view.The system should do the following services:
 
@@ -16,13 +16,13 @@
 - Ideally he would be able to see some type of graphic. E.g. the number of likes plotted against each article on a chart.
 - If time allows, Mr. Pressford would really like employees to have the ability to comment on each article.
 
- ## Setup:
+## Setup:
 
-   Create virtualenv(Optional) using python 3.6
-   Run pip install -r requirements.txt
-   Run python manage.py makemigrations
-   Run python manage.py migrate
-   Run python manage.py runserver # Now go to localhost:8000 
+- Create virtualenv(Optional) using python 3.6
+- Run pip install -r requirements.txt
+- Run python manage.py makemigrations
+- Run python manage.py migrate
+- Run python manage.py runserver # Now go to localhost:8000
    
-   #Testing
-   Run python manage.py test
+##Testing
+-Run python manage.py test
