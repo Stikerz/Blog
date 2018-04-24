@@ -24,5 +24,7 @@
 - Run python manage.py migrate
 - Run python manage.py runserver # Now go to localhost:8000
    
-##Testing
--Run python manage.py test
+## Testing
+- Run python manage.py test accounts.tests # Run accounts test
+- Run python manage.py test articles.tests # Run articles test
+- Run python manage.py test comments.tests # Run comments test
