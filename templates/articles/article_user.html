@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="container">
+
+     <h4>Articles</h4></br>
+
+
+<form class="float-right" method="get" action="">
+
+<input type="text" name="query" placeholder="Search Posts"/>
+<input type="submit" value="Search"/>
+
+</form><br/><br/><br/>
+
+    </div>
+
+
+    <div class="container h-100">
+       <div class="row align-items-center h-100">
+        <div class="col-6 mx-auto">
+{% for obj in object_list %}
+
+     {% if  request.user == obj.user %}
+
+    <div class="card" style="width: 30rem;">
+  <div class="card-body">
+    <h5 class="card-title"><a href="{% url 'articles:article_detailed_view' slug=obj.slug %}" >
+        {{ obj.title }}</a></h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{ obj.updated | timesince }} ago
+    </h6>
+    <p class="card-text">{{ obj.body | linebreaks | truncatechars:60 }}</p>
+    <a href="{% url 'articles:article_detailed_view' slug=obj.slug %}"
+        class="card-link">View</a>
+
+    <a href="{% url 'articles:article_update' slug=obj.slug %}"
+       class="card-link">Edit</a>
+    <a href="{% url 'articles:article_delete' slug=obj.slug %}"
+       class="card-link">Delete</a>
+      {% endif %}
+  </div>
+</div><br/>
+
+
+{% endfor %}
+          </div>
+</div>
+      </div>
+
+<div class="container">
+
+    <div class="pagination">
+    <span class="step-links">
+        {% if object_list.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ object_list.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.
+        </span>
+
+        {% if object_list.has_next %}
+            <a href="?page={{ object_list.next_page_number }}">next</a>
+            <a href="?page={{ object_list.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+ </div>
+
+{% endblock content%}

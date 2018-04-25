@@ -166,4 +166,22 @@ class ChartData(APIView):
                 "likes": article_likes}
         return Response(data)
 
+def article_user(request):
+    if request.user.is_authenticated:
+        template = 'articles/article_user.html'
+        query_set = Article.objects.all().order_by('-updated').filter(
+            user=request.user)
+        query = request.GET.get("query")
+        if query:
+            query_set = query_set.filter(title__icontains=query)
+        paginator = Paginator(query_set, 5)
+        page = request.GET.get('page')
+        object_list = paginator.get_page(page)
+        context = {'object_list': object_list, 'request': request}
+
+        return render(request, template, context)
+    else:
+        raise Http404("Page cannot be found")
+
+
 
