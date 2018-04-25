@@ -79,7 +79,8 @@ def article_delete(request, slug):
 def article_list(request):
     if request.user.is_authenticated:
         template = 'articles/article_list.html'
-        query_set = Article.objects.all().order_by('-updated')
+        query_set = Article.objects.all().order_by('-updated').filter(
+            status='Published')
         query = request.GET.get("query")
         if query:
             query_set = query_set.filter(title__icontains=query)
