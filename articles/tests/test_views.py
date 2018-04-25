@@ -163,6 +163,20 @@ class ArticlesViewsTest(TestCase):
             article.slug))
         self.assertEqual(response.status_code, 404)
 
+    def test_article_user_view_with_user_loggedin(self):
+        user_login = self.client.login(username="john", password="smith")
+        self.assertTrue(user_login)
+        response = self.client.get('/articles/my_articles/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_article_user_view_with_user_loggedout(self):
+        user_login = self.client.login(username="john", password="smith")
+        self.assertTrue(user_login)
+        self.client.logout()
+        response = self.client.get('/articles/my_articles/')
+        self.assertEqual(response.status_code, 404)
+
+
 
 
 
